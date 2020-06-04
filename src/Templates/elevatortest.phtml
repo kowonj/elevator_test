@@ -1,0 +1,165 @@
+<html>
+  <head>
+      <title>Elevator Control</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	    <script type="text/javascript">
+        $(document).ready(function () {
+
+          // This function is to disable buttons if elevator(s) are not created.
+          function disableButtons(numcar) {
+            // Disabling after successfully created.
+            $('#create').prop('disabled', true);
+            $('#numcar').prop('disabled', true);
+
+            if (numcar < 3) {
+              if (numcar == 1) {
+                $('.elev2').prop('disabled', true);
+                $('.elev2').css({'background': '#fff', 'color': 'grey'});
+              }
+              $('.elev3').prop('disabled', true);
+              $('.elev3').css({'background': '#fff', 'color': 'grey'});
+            }
+          }
+
+          // Ajax function for POST to create elevators.
+          $('#create').click(function (e) {
+            e.preventDefault();
+
+            var numcar = $("#numcar").val();
+            var dataString = 'num=' + numcar;
+            $numcar = numcar;
+            $.ajax({
+              url:"./elevator",            					  			
+              type :'POST',	   			
+              data : dataString,					   			 
+              cache : false,        
+              success: function (args) {  
+                args=$.trim(args);
+                disableButtons(numcar);
+
+                // Show status message and fade out after 5 sec.    				 
+                var show_args="<font color='red'>Success!</font>";
+                $('#resultComment').html(show_args);
+                setTimeout(function() {
+                  $('#resultComment').html("");
+                }, 5000);
+
+              },
+              error: function (e) {    
+                alert("code : " + e.status + "\r\nmessage : " + e.responseText + args);
+              }
+            }); // end of $.ajax
+          }); // end of submit() 
+
+          
+          // AJAX function for PUT to update a floor of an elevator.
+          $('#elev1submit, #elev2submit, #elev3submit').click(function (e) {
+            e.preventDefault();
+
+            var selectedElev = e.target.classList.value;
+            var elevClass = '#' + selectedElev;
+            var selectedFloor = $(elevClass).val();
+
+            var dataString = {
+              "id": selectedElev,
+              "floor": selectedFloor
+            }
+
+            $.ajax({
+              url:"./elevator/" + selectedElev, 
+              type :'PUT',	   			
+              data : dataString,					   			 
+              cache : false,        
+              success: function (args) {  
+                args=$.trim(args);
+                var showMsgCls = '.' + selectedElev + '.currentfloor';
+
+                // Show status message and fade out after 5 sec.    				 
+                var show_args="<font color='red'>Success!</font>";
+                $(showMsgCls).html('');
+                $(showMsgCls).html(show_args);
+                setTimeout(function() {
+                  $(showMsgCls).html("The current floor is " + selectedFloor);  
+                }, 2000);
+              },
+              error: function (e) {    
+                alert("code : " + e.status + "\r\nmessage : " + e.responseText + args);
+              }
+            }); // end of $.ajax
+          });
+        }); // end of ready
+      </script>
+  </head>
+
+  <style>
+   .elevator-example .row>.col, .elevator-example .row>[class^=col-] {
+     padding-top: .75rem;
+     padding-bottom: .75rem;
+     background-color: rgba(86,61,124,.15);
+     border: 1px solid rgba(86,61,124,.2);
+   }
+  </style>
+
+  <body>
+    <h3>Elevator Control</h3>
+    <br /><br />
+    <!-- Number of Elevators -->
+    <!-- To enter number of elevator(s) to create -->
+    <div>
+      <form class="num_cars">
+        <span>How many elevators would you like to create?</span><br />
+        <label for="num">Number of Elevators (Max 3):</label>
+        <input name="num" id="numcar" type="number" size="8" min="1" max="3" value="1">
+        <button id="create">Create</button>
+        <div id="resultComment"></div> 
+      </form>    
+    </div>
+    <!-- End of Number of Elevators -->
+
+    <!-- Elevators 1 to 3 -->
+    <div class="elevator-example">
+      <div class="container">
+        <div class="row">
+          <!-- Elevator 1 -->
+          <div class="col-sm elev1">
+            <div>Elevator 1</div>
+            <form class="ele1-form">
+              <label for="elev1">Destination:</label>
+              <input name="elev1" class="elev1" id="elev1" type="number" size="8" min="1" max="5" value="1">
+              <button id="elev1submit" class="elev1" data="elev1">Go</button>
+            </form>
+            <div class="elev1 currentfloor"></div> 
+          </div>
+          <!-- End of Elevator 1 -->
+
+          <!-- Elevator 2 -->
+          <div class="col-sm elev2">
+            <div>Elevator 2</div>
+            <form class="ele2-form">
+              <label for="elev2">Destination:</label>
+              <input name="elev2" class="elev2" id="elev2" type="number" size="8" min="1" max="5" value="1">
+              <button id="elev2submit" class="elev2">Go</button>
+            </form>
+            <div class="elev2 currentfloor"></div> 
+          </div>
+          <!-- End of Elevator 2 -->
+          
+          <!-- Elevator 3 -->
+          <div class="col-sm elev3">
+            <div>Elevator 3</div>
+            <form class="ele3-form">
+              <label for="elev3">Destination:</label>
+              <input name="elev3" class="elev3" id="elev3" type="number" size="8" min="1" max="5" value="1">
+              <button id="elev3submit" class="elev3">Go</button>
+            </form>
+            <div class="elev3 currentfloor"></div> 
+          </div>
+          <!-- End of Elevator 3 -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End of elevator-example class -->
+  </body>
+</html>
