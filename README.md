@@ -84,7 +84,7 @@ Additional tools: [dotenv](https://packagist.org/packages/vlucas/phpdotenv), [co
 - With PHP local webserver running: `php -S localhost:8080`, a page will be rendered in ``localhost:8080``.
   
 - Default UI as below:<br/>
-![Default_UI](src\resources\images\elevator_ui1.PNG)
+![Default UI](https://github.com/kowonj/elevator_test/blob/master/src/resources/images/elevator_ui1.PNG)
 
 - Users can enter how many elevator they want to create (min: 1, max: 3). 
 - Three blocks which each of them represents an elevator will be rendered.
@@ -102,7 +102,7 @@ Additional tools: [dotenv](https://packagist.org/packages/vlucas/phpdotenv), [co
      FLOOR_COUNT={"elev1":"1","elev2":"1", "elev3":"3"}
 
   ``` 
-  ![Create-success](src\resources\images\elevator_ui1-created.PNG)
+  ![Create-success](https://github.com/kowonj/elevator_test/blob/master/src/resources/images/elevator_ui1-created.PNG)
  
 - User can enter a floor number between 1 to 5.
 - <b>PUT</b> Method: When 'Go' button is submitted, Backend will update ``FLOOR_COUNT`` in .env file and return updated data as a response: 
@@ -115,9 +115,9 @@ Additional tools: [dotenv](https://packagist.org/packages/vlucas/phpdotenv), [co
 
 - If PUT request is successfuly processed, the frontend will show 'Success' message (AJAX) and the message will be hidden after few seconds. Then it will show a info text of current floor. The text will be updated via AJAX.
 - ex. Elevator 1 floor changed:
- ![go1](src\resources\images\elevator_ui1-go1.PNG)
+ ![go1](https://github.com/kowonj/elevator_test/blob/master/src/resources/images/elevator_ui1-go1.PNG)
 - ex. Elevator 2 floor changed:
- ![go2](src\resources\images\elevator_ui1-go2.PNG)
+ ![go2](https://github.com/kowonj/elevator_test/blob/master/src/resources/images/elevator_ui1-go2.PNG)
 
 
 #### TO DO:
