@@ -53,6 +53,11 @@ Additional tools: [dotenv](https://packagist.org/packages/vlucas/phpdotenv), [co
    # Need to dump autoload after installing dotenv.
    composer dump-autoload
   ```
+- To untrack .env file:
+  ```
+    #In elevator-test folder:
+    git update-index --assume-unchanged src/.env
+  ```
   
 
 #### Folder Structure: 
